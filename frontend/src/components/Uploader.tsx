@@ -12,7 +12,7 @@ export function Uploader({
   onFile,
   preview,
   loading,
-  accent = '#19e08c',
+  accent = '#22c55e',
   samples = [],
   cta = 'Drop a leaf photo',
 }: {
@@ -49,7 +49,7 @@ export function Uploader({
         {preview ? (
           <>
             <img src={preview} alt="upload preview" className="absolute inset-0 h-full w-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#04140c]/70 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0c0f0e]/70 to-transparent" />
             {/* HUD reticle */}
             <div className="pointer-events-none absolute inset-4 rounded-xl border border-lime/30">
               <span className="absolute -left-px -top-px h-4 w-4 border-l-2 border-t-2 border-lime" />
@@ -63,7 +63,7 @@ export function Uploader({
                   className="pointer-events-none absolute inset-x-0 top-0 h-16"
                   style={{ background: `linear-gradient(to bottom, ${accent}55, transparent)`, animation: 'scanline 1.8s linear infinite' }}
                 />
-                <div className="absolute inset-0 grid place-items-center bg-[#04140c]/40">
+                <div className="absolute inset-0 grid place-items-center bg-[#0c0f0e]/40">
                   <div className="glass-strong flex items-center gap-2 rounded-full px-4 py-2 font-mono text-xs text-lime">
                     <Loader2 size={14} className="animate-spin" /> analyzing…
                   </div>
@@ -71,7 +71,7 @@ export function Uploader({
               </>
             )}
             {!loading && (
-              <div className="glass absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full px-3 py-1.5 font-mono text-[11px] text-ink-dim opacity-0 transition-opacity group-hover:opacity-100">
+              <div className="glass absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full px-3 py-1.5 font-mono text-[12px] text-ink-dim opacity-0 transition-opacity group-hover:opacity-100">
                 click to replace
               </div>
             )}
@@ -82,7 +82,7 @@ export function Uploader({
               <UploadCloud size={26} />
             </span>
             <div className="font-display text-lg font-semibold">{cta}</div>
-            <p className="mt-1.5 font-mono text-[11px] text-muted">drag & drop · or click to browse · JPG / PNG</p>
+            <p className="mt-1.5 font-mono text-[12px] text-muted">drag & drop · or click to browse · JPG / PNG</p>
           </div>
         )}
         <input
@@ -99,7 +99,7 @@ export function Uploader({
 
       {samples.length > 0 && (
         <div className="mt-4">
-          <div className="mb-2 flex items-center gap-1.5 font-mono text-[10px] tracking-wide text-muted">
+          <div className="mb-2 flex items-center gap-1.5 font-mono text-[11px] tracking-wide text-muted">
             <ImageUp size={12} /> NO PHOTO? TRY A SAMPLE
           </div>
           <div className="flex flex-wrap gap-2">
@@ -110,7 +110,7 @@ export function Uploader({
                 className="group flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 p-1.5 pr-3 transition-all hover:border-emerald/40 hover:bg-emerald/10"
               >
                 <img src={s.src} alt="" className="h-8 w-8 rounded-lg object-cover" />
-                <span className="font-mono text-[11px] text-ink-dim">{s.label}</span>
+                <span className="font-mono text-[12px] text-ink-dim">{s.label}</span>
               </button>
             ))}
           </div>

@@ -31,7 +31,7 @@ export function NutrientLab() {
 
             {/* crop */}
             <div className="mb-5">
-              <div className="mb-2 font-mono text-[11px] text-muted">CROP</div>
+              <div className="mb-2 font-mono text-[12px] text-muted">CROP</div>
               <div className="flex flex-wrap gap-2">
                 {AGRO_KEYS.map((k) => {
                   const cp = AGRO_PROFILES[k]
@@ -40,7 +40,7 @@ export function NutrientLab() {
                     <button
                       key={k}
                       onClick={() => setCropKey(k)}
-                      className={`flex items-center gap-1.5 rounded-full border px-2.5 py-1.5 font-mono text-[11px] transition-all ${
+                      className={`flex items-center gap-1.5 rounded-full border px-2.5 py-1.5 font-mono text-[12px] transition-all ${
                         on ? 'border-emerald/50 bg-emerald/15 text-lime' : 'border-white/10 text-muted hover:text-ink-dim'
                       }`}
                     >
@@ -53,7 +53,7 @@ export function NutrientLab() {
 
             {/* stage */}
             <div className="mb-5">
-              <div className="mb-2 font-mono text-[11px] text-muted">GROWTH STAGE</div>
+              <div className="mb-2 font-mono text-[12px] text-muted">GROWTH STAGE</div>
               <div className="grid grid-cols-3 gap-2">
                 {STAGES.map((s) => {
                   const on = s.id === stage
@@ -66,7 +66,7 @@ export function NutrientLab() {
                       }`}
                     >
                       <div className={`text-[12.5px] font-medium ${on ? 'text-lime' : 'text-ink-dim'}`}>{s.label}</div>
-                      <div className="mt-0.5 font-mono text-[9px] text-muted">{s.hint}</div>
+                      <div className="mt-0.5 font-mono text-[10.5px] text-muted">{s.hint}</div>
                     </button>
                   )
                 })}
@@ -77,23 +77,23 @@ export function NutrientLab() {
             <div className="mb-6">
               <div className="mb-1.5 flex items-center justify-between">
                 <span className="flex items-center gap-2 text-[13px] text-ink-dim"><GlassWater size={14} className="text-cyan" /> Reservoir volume</span>
-                <span className="font-mono text-[13px] text-lime">{volume}<span className="ml-1 text-[10px] text-muted">L</span></span>
+                <span className="font-mono text-[13px] text-lime">{volume}<span className="ml-1 text-[11px] text-muted">L</span></span>
               </div>
               <input type="range" className="verdant-range" min={5} max={200} step={5} value={volume}
                 onChange={(e) => setVolume(parseInt(e.target.value))}
-                style={{ background: `linear-gradient(90deg, #19e08c ${((volume - 5) / 195) * 100}%, rgba(255,255,255,0.08) ${((volume - 5) / 195) * 100}%)` }} />
+                style={{ background: `linear-gradient(90deg, #22c55e ${((volume - 5) / 195) * 100}%, rgba(255,255,255,0.08) ${((volume - 5) / 195) * 100}%)` }} />
             </div>
 
             {/* targets */}
             <div className="grid grid-cols-3 gap-3">
               {[
-                { l: 'Target EC', v: result.targetEC, u: 'mS/cm', c: '#8bff5a' },
-                { l: 'TDS', v: result.tds, u: 'ppm', c: '#38f5c9' },
-                { l: 'pH', v: result.phTarget, u: '', c: '#4be3ff' },
+                { l: 'Target EC', v: result.targetEC, u: 'mS/cm', c: '#4ade80' },
+                { l: 'TDS', v: result.tds, u: 'ppm', c: '#34d399' },
+                { l: 'pH', v: result.phTarget, u: '', c: '#38bdf8' },
               ].map((t) => (
                 <div key={t.l} className="glass-soft rounded-2xl p-3 text-center">
                   <div className="font-display text-lg font-bold leading-none" style={{ color: t.c }}>{t.v}</div>
-                  <div className="mt-1 font-mono text-[9px] text-muted">{t.l}{t.u && ` · ${t.u}`}</div>
+                  <div className="mt-1 font-mono text-[10.5px] text-muted">{t.l}{t.u && ` · ${t.u}`}</div>
                 </div>
               ))}
             </div>
@@ -104,7 +104,7 @@ export function NutrientLab() {
         <Reveal delay={0.1}>
           <GlassCard hover={false} glow className="relative overflow-hidden p-6">
             <img src="/assets/hero/nutrient-flow.png" alt="" className="pointer-events-none absolute right-0 top-0 h-44 w-1/2 object-cover opacity-[0.16]" />
-            <div className="absolute inset-0 bg-gradient-to-l from-transparent to-[#08160c]/40" />
+            <div className="absolute inset-0 bg-gradient-to-l from-transparent to-[#121615]/40" />
 
             <div className="relative">
               {/* salt doses */}
@@ -124,13 +124,13 @@ export function NutrientLab() {
                     <div className="flex items-center justify-between">
                       <div>
                         <div className="text-[13.5px] font-medium text-ink">{s.name}</div>
-                        <div className="font-mono text-[10px] text-muted">{s.formula} · supplies {s.provides}</div>
+                        <div className="font-mono text-[11px] text-muted">{s.formula} · supplies {s.provides}</div>
                       </div>
                       <div className="text-right">
                         <div className="font-display text-lg font-bold" style={{ color: s.color }}>
-                          {s.grams}<span className="ml-1 text-[11px] font-normal text-muted">g</span>
+                          {s.grams}<span className="ml-1 text-[12px] font-normal text-muted">g</span>
                         </div>
-                        <div className="font-mono text-[9px] text-faint">{s.gramsPerL} g/L</div>
+                        <div className="font-mono text-[10.5px] text-faint">{s.gramsPerL} g/L</div>
                       </div>
                     </div>
                     <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-white/8">
@@ -143,7 +143,7 @@ export function NutrientLab() {
 
               {/* elemental profile */}
               <div className="mt-6">
-                <div className="mb-2.5 flex items-center gap-2 font-mono text-[10px] tracking-wide text-muted">
+                <div className="mb-2.5 flex items-center gap-2 font-mono text-[11px] tracking-wide text-muted">
                   <FlaskConical size={13} className="text-mint" /> DELIVERED ELEMENTAL PROFILE (ppm)
                 </div>
                 <div className="grid grid-cols-6 gap-2">
@@ -154,7 +154,7 @@ export function NutrientLab() {
                           initial={{ height: 0 }} animate={{ height: `${(e.ppm / maxPpm) * 100}%` }} transition={{ duration: 0.6, ease: 'easeOut' }} />
                       </div>
                       <div className="mt-1.5 font-display text-sm font-bold" style={{ color: e.color }}>{e.el}</div>
-                      <div className="font-mono text-[9px] text-muted">{e.ppm}</div>
+                      <div className="font-mono text-[10.5px] text-muted">{e.ppm}</div>
                     </div>
                   ))}
                 </div>
@@ -175,7 +175,7 @@ export function NutrientLab() {
             <ol className="space-y-3">
               {result.mixingSteps.map((step, i) => (
                 <li key={i} className="flex gap-3">
-                  <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-emerald/15 font-mono text-[11px] text-lime">{i + 1}</span>
+                  <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-emerald/15 font-mono text-[12px] text-lime">{i + 1}</span>
                   <span className="pt-0.5 text-[13px] leading-snug text-ink-dim">{step}</span>
                 </li>
               ))}

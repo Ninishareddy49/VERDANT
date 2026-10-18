@@ -29,7 +29,7 @@ export function VpdMatrix() {
             <div className="flex gap-2">
               {/* y-axis label */}
               <div className="flex flex-col items-center justify-center">
-                <span className="rotate-180 font-mono text-[10px] tracking-widest text-muted [writing-mode:vertical-rl]">
+                <span className="rotate-180 font-mono text-[11px] tracking-widest text-muted [writing-mode:vertical-rl]">
                   RELATIVE HUMIDITY %
                 </span>
               </div>
@@ -39,7 +39,7 @@ export function VpdMatrix() {
                   {/* y ticks */}
                   <div className="flex flex-col justify-between pr-1.5 py-0.5">
                     {HUMS.map((h) => (
-                      <span key={h} className="font-mono text-[9px] leading-none text-faint" style={{ height: `${100 / HUMS.length}%` }}>
+                      <span key={h} className="font-mono text-[10.5px] leading-none text-faint" style={{ height: `${100 / HUMS.length}%` }}>
                         {h}
                       </span>
                     ))}
@@ -77,13 +77,13 @@ export function VpdMatrix() {
                 <div className="mt-1.5 flex" style={{ paddingLeft: '1.4rem' }}>
                   <div className="grid flex-1 gap-[2px]" style={{ gridTemplateColumns: `repeat(${TEMPS.length}, minmax(0, 1fr))` }}>
                     {TEMPS.map((t) => (
-                      <span key={t} className="text-center font-mono text-[9px] text-faint">
+                      <span key={t} className="text-center font-mono text-[10.5px] text-faint">
                         {t % 2 === 0 ? t : ''}
                       </span>
                     ))}
                   </div>
                 </div>
-                <div className="mt-1 text-center font-mono text-[10px] tracking-widest text-muted">AIR TEMPERATURE °C</div>
+                <div className="mt-1 text-center font-mono text-[11px] tracking-widest text-muted">AIR TEMPERATURE °C</div>
               </div>
             </div>
 
@@ -92,7 +92,7 @@ export function VpdMatrix() {
               {VPD_BANDS.map((b) => (
                 <div key={b.zone} className="flex items-center gap-1.5">
                   <span className="h-3 w-3 rounded-[3px]" style={{ background: b.color, boxShadow: `0 0 8px ${b.color}80` }} />
-                  <span className="font-mono text-[10px] text-muted">{b.label} <span className="text-faint">({b.range})</span></span>
+                  <span className="font-mono text-[11px] text-muted">{b.label} <span className="text-faint">({b.range})</span></span>
                 </div>
               ))}
             </div>
@@ -120,20 +120,20 @@ export function VpdMatrix() {
               <div>
                 <div className="mb-1.5 flex items-center justify-between">
                   <span className="flex items-center gap-2 text-[13px] text-ink-dim"><Thermometer size={14} className="text-amber" /> Temperature</span>
-                  <span className="font-mono text-[13px] text-lime">{temp}<span className="ml-0.5 text-[10px] text-muted">°C</span></span>
+                  <span className="font-mono text-[13px] text-lime">{temp}<span className="ml-0.5 text-[11px] text-muted">°C</span></span>
                 </div>
                 <input type="range" className="verdant-range" min={16} max={34} step={1} value={temp}
                   onChange={(e) => setTemp(parseInt(e.target.value))}
-                  style={{ background: `linear-gradient(90deg, #ffc24b ${((temp - 16) / 18) * 100}%, rgba(255,255,255,0.08) ${((temp - 16) / 18) * 100}%)` }} />
+                  style={{ background: `linear-gradient(90deg, #f59e0b ${((temp - 16) / 18) * 100}%, rgba(255,255,255,0.08) ${((temp - 16) / 18) * 100}%)` }} />
               </div>
               <div>
                 <div className="mb-1.5 flex items-center justify-between">
                   <span className="flex items-center gap-2 text-[13px] text-ink-dim"><Droplets size={14} className="text-cyan" /> Humidity</span>
-                  <span className="font-mono text-[13px] text-lime">{rh}<span className="ml-0.5 text-[10px] text-muted">%</span></span>
+                  <span className="font-mono text-[13px] text-lime">{rh}<span className="ml-0.5 text-[11px] text-muted">%</span></span>
                 </div>
                 <input type="range" className="verdant-range" min={40} max={95} step={1} value={rh}
                   onChange={(e) => setRh(parseInt(e.target.value))}
-                  style={{ background: `linear-gradient(90deg, #4be3ff ${((rh - 40) / 55) * 100}%, rgba(255,255,255,0.08) ${((rh - 40) / 55) * 100}%)` }} />
+                  style={{ background: `linear-gradient(90deg, #38bdf8 ${((rh - 40) / 55) * 100}%, rgba(255,255,255,0.08) ${((rh - 40) / 55) * 100}%)` }} />
               </div>
             </div>
 
@@ -145,7 +145,7 @@ export function VpdMatrix() {
               <p className="text-[12.5px] leading-relaxed text-ink-dim">{advice(current)}</p>
             </div>
 
-            <div className="mt-4 flex items-start gap-2 text-[11px] leading-snug text-faint">
+            <div className="mt-4 flex items-start gap-2 text-[12px] leading-snug text-faint">
               <Leaf size={13} className="mt-0.5 shrink-0 text-emerald" />
               VPD = saturation pressure at leaf temp − actual air vapour pressure. Leaves modelled 1.5°C below air.
             </div>

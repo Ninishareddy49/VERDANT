@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { CornerDownLeft, Loader2, Sparkles, WifiOff } from 'lucide-react'
 import { Chip, GlassCard, Reveal, SectionTitle } from '../components/ui'
+import { BrandMark } from '../components/Sidebar'
 import { askAdvisor } from '../lib/api'
 
 interface Msg {
@@ -86,10 +87,10 @@ export function Advisor() {
                 className={`flex gap-3 ${m.role === 'user' ? 'flex-row-reverse' : ''}`}
               >
                 {m.role === 'ai' ? (
-                  <img src="/assets/brand/logo-glow.png" alt="" className="botanical h-9 w-9 shrink-0" />
+                  <BrandMark size={34} />
                 ) : (
-                  <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-gradient-to-br from-emerald to-mint font-display text-xs font-bold text-[#05140c]">
-                    D
+                  <div className="grid h-8.5 w-8.5 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/8 text-xs font-semibold text-ink">
+                    You
                   </div>
                 )}
                 <div className={`max-w-[78%] ${m.role === 'user' ? 'items-end text-right' : ''}`}>
@@ -102,14 +103,14 @@ export function Advisor() {
                   >
                     {m.role === 'ai' && m.topic && (
                       <div className="mb-1.5 flex items-center gap-2">
-                        <span className="eyebrow !text-[9px]">{m.topic}</span>
+                        <span className="eyebrow !text-[10.5px]">{m.topic}</span>
                         {m.offline && (
-                          <span className="inline-flex items-center gap-1 font-mono text-[9px] text-amber">
+                          <span className="inline-flex items-center gap-1 font-mono text-[10.5px] text-amber">
                             <WifiOff size={9} /> offline
                           </span>
                         )}
                         {typeof m.score === 'number' && !m.offline && (
-                          <span className="font-mono text-[9px] text-mint">{Math.round(m.score * 100)}% match</span>
+                          <span className="font-mono text-[10.5px] text-mint">{Math.round(m.score * 100)}% match</span>
                         )}
                       </div>
                     )}
@@ -122,7 +123,7 @@ export function Advisor() {
                         <button
                           key={r}
                           onClick={() => send(r)}
-                          className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[10px] text-muted transition-all hover:border-mint/40 hover:text-mint"
+                          className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[11px] text-muted transition-all hover:border-mint/40 hover:text-mint"
                         >
                           {r}
                         </button>
@@ -135,7 +136,7 @@ export function Advisor() {
 
             {loading && (
               <div className="flex items-center gap-3">
-                <img src="/assets/brand/logo-glow.png" alt="" className="botanical h-9 w-9" />
+                <BrandMark size={34} />
                 <div className="glass-soft flex items-center gap-2 rounded-2xl rounded-tl-sm px-4 py-3 font-mono text-xs text-mint">
                   <Loader2 size={13} className="animate-spin" /> searching knowledge base…
                 </div>
@@ -150,7 +151,7 @@ export function Advisor() {
               <button
                 key={s}
                 onClick={() => send(s)}
-                className="flex shrink-0 items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 font-mono text-[11px] text-muted transition-all hover:border-emerald/40 hover:text-lime"
+                className="flex shrink-0 items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 font-mono text-[12px] text-muted transition-all hover:border-emerald/40 hover:text-lime"
               >
                 <Sparkles size={11} /> {s}
               </button>
@@ -174,7 +175,7 @@ export function Advisor() {
             <button
               type="submit"
               disabled={loading || !input.trim()}
-              className="sheen inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-lime to-emerald px-4 py-2.5 text-sm font-semibold text-[#05140c] glow-lime transition-all hover:brightness-110 disabled:opacity-40"
+              className="inline-flex items-center gap-2 rounded-xl bg-emerald px-4 py-2.5 text-sm font-semibold text-[#052e16] transition-colors hover:bg-lime disabled:opacity-40"
             >
               Ask <CornerDownLeft size={15} />
             </button>

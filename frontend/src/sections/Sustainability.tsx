@@ -44,7 +44,7 @@ export function Sustainability() {
                 </span>
                 <div className="font-display text-3xl font-bold text-grad">{s.value}</div>
                 <div className="mt-1 text-sm font-medium text-ink">{s.sub}</div>
-                <div className="mt-0.5 font-mono text-[10px] text-muted">{s.label}</div>
+                <div className="mt-0.5 font-mono text-[11px] text-muted">{s.label}</div>
               </GlassCard>
             </Reveal>
           )
@@ -64,20 +64,20 @@ export function Sustainability() {
               <AreaChart data={FOOTPRINT} margin={{ top: 8, right: 8, left: -18, bottom: 0 }}>
                 <defs>
                   <linearGradient id="gConv" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#ff6b6b" stopOpacity={0.35} />
-                    <stop offset="100%" stopColor="#ff6b6b" stopOpacity={0} />
+                    <stop offset="0%" stopColor="#f87171" stopOpacity={0.35} />
+                    <stop offset="100%" stopColor="#f87171" stopOpacity={0} />
                   </linearGradient>
                   <linearGradient id="gVerd" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#8bff5a" stopOpacity={0.5} />
-                    <stop offset="100%" stopColor="#8bff5a" stopOpacity={0} />
+                    <stop offset="0%" stopColor="#4ade80" stopOpacity={0.5} />
+                    <stop offset="100%" stopColor="#4ade80" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid stroke="rgba(120,220,170,0.07)" vertical={false} />
+                <CartesianGrid stroke="rgba(255,255,255,0.07)" vertical={false} />
                 <XAxis dataKey="m" tickLine={false} axisLine={false} />
                 <YAxis tickLine={false} axisLine={false} width={36} />
                 <Tooltip />
-                <Area type="monotone" dataKey="conventional" name="Conventional" stroke="#ff6b6b" strokeWidth={2} fill="url(#gConv)" />
-                <Area type="monotone" dataKey="verdant" name="VERDANT" stroke="#8bff5a" strokeWidth={2.5} fill="url(#gVerd)" />
+                <Area type="monotone" dataKey="conventional" name="Conventional" stroke="#f87171" strokeWidth={2} fill="url(#gConv)" />
+                <Area type="monotone" dataKey="verdant" name="VERDANT" stroke="#4ade80" strokeWidth={2.5} fill="url(#gVerd)" />
               </AreaChart>
             </ResponsiveContainer>
           </GlassCard>
@@ -100,7 +100,7 @@ export function Sustainability() {
               <div className="pointer-events-none absolute inset-0 grid place-items-center text-center">
                 <div>
                   <div className="font-display text-2xl font-bold text-lime">85%</div>
-                  <div className="font-mono text-[10px] text-muted">renewable</div>
+                  <div className="font-mono text-[11px] text-muted">renewable</div>
                 </div>
               </div>
             </div>
@@ -131,11 +131,11 @@ export function Sustainability() {
             <div className="space-y-4">
               {WATER_FLOW.map((w) => (
                 <div key={w.stage}>
-                  <div className="mb-1.5 flex justify-between font-mono text-[11px]">
+                  <div className="mb-1.5 flex justify-between font-mono text-[12px]">
                     <span className="text-ink-dim">{w.stage}</span>
                     <span className="text-cyan">{w.value} L</span>
                   </div>
-                  <Bar value={w.value} color="#4be3ff" height={8} />
+                  <Bar value={w.value} color="#38bdf8" height={8} />
                 </div>
               ))}
             </div>
@@ -146,10 +146,10 @@ export function Sustainability() {
           <GlassCard hover={false} className="flex h-full flex-col p-6">
             <SectionTitle eyebrow="Equivalence" title="What that means" className="mb-5" />
             <div className="flex items-center gap-6">
-              <Ring value={92} color="#8bff5a" size={120} stroke={10}>
+              <Ring value={92} color="#4ade80" size={120} stroke={10}>
                 <div>
                   <div className="font-display text-2xl font-bold">92%</div>
-                  <div className="font-mono text-[9px] text-muted">circular</div>
+                  <div className="font-mono text-[10.5px] text-muted">circular</div>
                 </div>
               </Ring>
               <div className="flex-1 space-y-3">
@@ -160,7 +160,7 @@ export function Sustainability() {
                     </span>
                     <div>
                       <div className="font-display text-base font-bold leading-none">{e.value}</div>
-                      <div className="mt-1 font-mono text-[10px] text-muted">{e.label}</div>
+                      <div className="mt-1 font-mono text-[11px] text-muted">{e.label}</div>
                     </div>
                   </div>
                 ))}
@@ -174,7 +174,7 @@ export function Sustainability() {
       <Reveal>
         <GlassCard hover={false} className="relative overflow-hidden">
           <img src="/assets/feature/seedling-hands.png" alt="" className="absolute inset-0 h-full w-full object-cover opacity-30" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#04120c]/95 to-[#04120c]/40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0c0f0e]/95 to-[#0c0f0e]/40" />
           <div className="relative flex flex-col items-start gap-3 p-8 md:p-10">
             <Chip tone="lime" dot>
               UN SDG 2 · 11 · 12 · 13

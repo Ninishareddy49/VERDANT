@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 import { cn } from '../lib/cn'
 
 /* ============================================================
-   Primitive component kit — glass, glow, gauges, sparklines
+   Primitive component kit — cards, buttons, gauges, sparklines
    ============================================================ */
 
 type Tone = 'mint' | 'lime' | 'emerald' | 'amber' | 'danger' | 'muted'
@@ -14,7 +14,7 @@ const toneMap: Record<Tone, string> = {
   emerald: 'text-emerald border-emerald/30 bg-emerald/10',
   amber: 'text-amber border-amber/30 bg-amber/10',
   danger: 'text-danger border-danger/30 bg-danger/10',
-  muted: 'text-muted border-white/10 bg-white/5',
+  muted: 'text-muted border-white/10 bg-white/[0.04]',
 }
 
 /* ---------- GlassCard ---------- */
@@ -28,12 +28,13 @@ export function GlassCard({ className, glow, hover = true, strong, children, ...
     <motion.div
       className={cn(
         strong ? 'glass-strong' : 'glass',
-        'edge-light rounded-3xl',
+        'rounded-2xl transition-colors duration-200',
+        hover && 'hover:border-white/12',
         glow && 'glow-soft',
         className,
       )}
-      whileHover={hover ? { y: -4 } : undefined}
-      transition={{ type: 'spring', stiffness: 280, damping: 22 }}
+      whileHover={hover ? { y: -2 } : undefined}
+      transition={{ type: 'spring', stiffness: 320, damping: 28 }}
       {...props}
     >
       {children}
@@ -80,7 +81,7 @@ export function Chip({
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[11px] tracking-wide',
+        'inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[11.5px] font-medium',
         toneMap[tone],
         className,
       )}
@@ -98,16 +99,15 @@ interface BtnProps extends HTMLMotionProps<'button'> {
 }
 export function GlowButton({ variant = 'primary', className, children, ...props }: BtnProps) {
   const styles: Record<BtnVariant, string> = {
-    primary:
-      'bg-gradient-to-r from-lime to-emerald text-[#05140c] font-semibold glow-lime hover:brightness-110',
-    outline: 'border border-emerald/40 text-ink hover:bg-emerald/10 hover:border-emerald/70',
-    ghost: 'text-ink-dim hover:text-ink hover:bg-white/5',
+    primary: 'bg-emerald text-[#052e16] font-semibold shadow-sm hover:bg-lime',
+    outline: 'border border-white/12 bg-white/[0.03] text-ink font-medium hover:bg-white/[0.07] hover:border-white/20',
+    ghost: 'text-ink-dim font-medium hover:text-ink hover:bg-white/[0.06]',
   }
   return (
     <motion.button
-      whileTap={{ scale: 0.97 }}
+      whileTap={{ scale: 0.98 }}
       className={cn(
-        'sheen inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm transition-all duration-200',
+        'inline-flex items-center justify-center gap-2 rounded-xl px-4.5 py-2.5 text-sm transition-colors duration-150 disabled:opacity-50',
         styles[variant],
         className,
       )}
@@ -123,7 +123,7 @@ export function Sparkline({
   data,
   w = 120,
   h = 36,
-  color = '#8bff5a',
+  color = '#4ade80',
   fill = true,
 }: {
   data: number[]
@@ -160,9 +160,8 @@ export function Sparkline({
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
-        style={{ filter: `drop-shadow(0 0 4px ${color}aa)` }}
       />
-      <circle cx={pts[pts.length - 1][0]} cy={pts[pts.length - 1][1]} r="2.6" fill={color} style={{ filter: `drop-shadow(0 0 5px ${color})` }} />
+      <circle cx={pts[pts.length - 1][0]} cy={pts[pts.length - 1][1]} r="2.6" fill={color} />
     </svg>
   )
 }
@@ -172,7 +171,7 @@ export function Ring({
   value,
   size = 96,
   stroke = 8,
-  color = '#19e08c',
+  color = '#22c55e',
   track = 'rgba(255,255,255,0.08)',
   children,
 }: {
@@ -202,7 +201,6 @@ export function Ring({
           initial={{ strokeDashoffset: c }}
           animate={{ strokeDashoffset: off }}
           transition={{ duration: 1.1, ease: 'easeOut' }}
-          style={{ filter: `drop-shadow(0 0 6px ${color})` }}
         />
       </svg>
       <div className="absolute inset-0 grid place-items-center text-center">{children}</div>
@@ -213,7 +211,7 @@ export function Ring({
 /* ---------- Bar (linear progress) ---------- */
 export function Bar({
   value,
-  color = '#19e08c',
+  color = '#22c55e',
   className,
   height = 7,
 }: {
@@ -226,7 +224,7 @@ export function Bar({
     <div className={cn('w-full overflow-hidden rounded-full bg-white/8', className)} style={{ height }}>
       <motion.div
         className="h-full rounded-full"
-        style={{ background: `linear-gradient(90deg, ${color}, #8bff5a)`, boxShadow: `0 0 10px ${color}` }}
+        style={{ background: color }}
         initial={{ width: 0 }}
         animate={{ width: `${value}%` }}
         transition={{ duration: 1, ease: 'easeOut' }}
@@ -253,8 +251,8 @@ export function SectionTitle({
     <div className={cn('mb-6 flex flex-wrap items-end justify-between gap-4', className)}>
       <div>
         {eyebrow && <div className="eyebrow mb-2">{eyebrow}</div>}
-        <h2 className="text-2xl font-semibold tracking-tight md:text-[28px]">{title}</h2>
-        {sub && <p className="mt-1.5 max-w-xl text-sm text-muted">{sub}</p>}
+        <h2 className="text-2xl font-semibold tracking-tight md:text-[26px]">{title}</h2>
+        {sub && <p className="mt-1.5 max-w-xl text-sm leading-relaxed text-muted">{sub}</p>}
       </div>
       {right}
     </div>
@@ -264,7 +262,7 @@ export function SectionTitle({
 /* ---------- LiveDot ---------- */
 export function LiveDot({ label = 'LIVE' }: { label?: string }) {
   return (
-    <span className="inline-flex items-center gap-2 font-mono text-[11px] tracking-widest text-lime">
+    <span className="inline-flex items-center gap-2 text-[11.5px] font-medium text-lime">
       <span className="live-dot" /> {label}
     </span>
   )

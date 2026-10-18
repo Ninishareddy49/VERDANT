@@ -5,7 +5,7 @@ import { Chip, GlassCard, GlowButton, Reveal, SectionTitle } from '../components
 import { generateGrowPlan, type GrowPlan as Plan } from '../lib/api'
 
 const QUICK = ['Basil', 'Cherry Tomato', 'Strawberry', 'Butterhead Lettuce', 'Thai Chili', 'Wasabi']
-const STAGE_COLORS = ['#8bff5a', '#38f5c9', '#19e08c', '#4be3ff', '#b6ff6a', '#ffc24b']
+const STAGE_COLORS = ['#4ade80', '#34d399', '#22c55e', '#38bdf8', '#86efac', '#f59e0b']
 
 export function GrowPlan() {
   const [crop, setCrop] = useState('')
@@ -35,7 +35,7 @@ export function GrowPlan() {
       <Reveal>
         <GlassCard hover={false} className="relative overflow-hidden p-6">
           <img src="/assets/hero/grow-lab.png" alt="" className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-[0.14]" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#04120c]/90 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0c0f0e]/90 to-transparent" />
           <div className="relative">
             <form
               onSubmit={(e) => { e.preventDefault(); run(crop) }}
@@ -61,7 +61,7 @@ export function GrowPlan() {
                 <button
                   key={q}
                   onClick={() => { setCrop(q); run(q) }}
-                  className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 font-mono text-[11px] text-muted transition-all hover:border-lime/40 hover:text-lime"
+                  className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 font-mono text-[12px] text-muted transition-all hover:border-lime/40 hover:text-lime"
                 >
                   {q}
                 </button>
@@ -123,19 +123,19 @@ export function GrowPlan() {
                     <GlassCard hover={false} className="p-5" style={{ borderColor: `${color}22` }}>
                       <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
                         <h4 className="font-display text-lg font-semibold" style={{ color }}>{s.name}</h4>
-                        <span className="font-mono text-[11px] text-muted">Week {s.weeks}</span>
+                        <span className="font-mono text-[12px] text-muted">Week {s.weeks}</span>
                       </div>
 
                       {/* climate chips */}
                       <div className="mb-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
                         {[
-                          { icon: Thermometer, l: 'Temp', v: s.temp, c: '#ffc24b' },
-                          { icon: CloudFog, l: 'VPD', v: s.vpd, c: '#4be3ff' },
-                          { icon: Beaker, l: 'EC', v: s.ec, c: '#38f5c9' },
-                          { icon: Sun, l: 'Light', v: s.light, c: '#8bff5a' },
+                          { icon: Thermometer, l: 'Temp', v: s.temp, c: '#f59e0b' },
+                          { icon: CloudFog, l: 'VPD', v: s.vpd, c: '#38bdf8' },
+                          { icon: Beaker, l: 'EC', v: s.ec, c: '#34d399' },
+                          { icon: Sun, l: 'Light', v: s.light, c: '#4ade80' },
                         ].map((m) => (
                           <div key={m.l} className="glass-soft rounded-xl px-2.5 py-2">
-                            <div className="flex items-center gap-1.5 font-mono text-[9px] text-muted">
+                            <div className="flex items-center gap-1.5 font-mono text-[10.5px] text-muted">
                               <m.icon size={11} style={{ color: m.c }} /> {m.l.toUpperCase()}
                             </div>
                             <div className="mt-0.5 font-mono text-[12px] text-ink">{m.v}</div>

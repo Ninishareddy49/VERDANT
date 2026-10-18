@@ -48,7 +48,7 @@ export function Scanner() {
               onFile={handleFile}
               preview={preview}
               loading={loading}
-              accent="#38f5c9"
+              accent="#34d399"
               cta="Drop a plant photo"
               samples={[
                 { label: 'Monstera', src: '/assets/botanical/monstera-glow.png', name: 'monstera.png' },
@@ -85,30 +85,30 @@ export function Scanner() {
                       )}
                     </div>
                     <h3 className="font-display text-2xl font-bold leading-tight">{result.top.label}</h3>
-                    <p className="font-mono text-[11px] text-muted">
+                    <p className="font-mono text-[12px] text-muted">
                       {crop ? `${crop.family} · ${crop.emoji}` : 'species match'}
                     </p>
                   </div>
-                  <Ring value={result.top.score * 100} color="#38f5c9" size={92} stroke={8}>
+                  <Ring value={result.top.score * 100} color="#34d399" size={92} stroke={8}>
                     <div className="font-display text-xl font-bold leading-none">
                       {Math.round(result.top.score * 100)}
                       <span className="text-xs">%</span>
                     </div>
-                    <div className="font-mono text-[9px] text-muted">match</div>
+                    <div className="font-mono text-[10.5px] text-muted">match</div>
                   </Ring>
                 </div>
 
                 {/* distribution */}
                 <div className="mt-5">
-                  <div className="mb-2 font-mono text-[10px] tracking-wide text-muted">TOP CANDIDATES</div>
+                  <div className="mb-2 font-mono text-[11px] tracking-wide text-muted">TOP CANDIDATES</div>
                   <div className="space-y-2">
                     {result.predictions.slice(0, 4).map((p, i) => (
                       <div key={p.label}>
-                        <div className="mb-1 flex justify-between font-mono text-[11px]">
+                        <div className="mb-1 flex justify-between font-mono text-[12px]">
                           <span className={i === 0 ? 'text-ink' : 'text-muted'}>{p.label}</span>
                           <span className={i === 0 ? 'text-mint' : 'text-muted'}>{(p.score * 100).toFixed(1)}%</span>
                         </div>
-                        <Bar value={p.score * 100} color={i === 0 ? '#38f5c9' : '#3a5446'} height={5} />
+                        <Bar value={p.score * 100} color={i === 0 ? '#34d399' : '#3f4743'} height={5} />
                       </div>
                     ))}
                   </div>
@@ -116,24 +116,24 @@ export function Scanner() {
 
                 {/* grow profile */}
                 <div className="mt-6 flex-1">
-                  <div className="mb-2 font-mono text-[10px] tracking-wide text-muted">GROW PROFILE</div>
+                  <div className="mb-2 font-mono text-[11px] tracking-wide text-muted">GROW PROFILE</div>
                   {crop ? (
                     <div className="glass-soft rounded-2xl p-4">
                       <div className="grid grid-cols-3 gap-3 text-center">
                         <div>
                           <Sprout size={16} className="mx-auto mb-1 text-lime" />
                           <div className="font-display text-base font-bold">{crop.daysToHarvest}d</div>
-                          <div className="font-mono text-[9px] text-muted">to harvest</div>
+                          <div className="font-mono text-[10.5px] text-muted">to harvest</div>
                         </div>
                         <div>
                           <Droplets size={16} className="mx-auto mb-1 text-cyan" />
                           <div className="font-display text-base font-bold capitalize">{crop.water}</div>
-                          <div className="font-mono text-[9px] text-muted">water need</div>
+                          <div className="font-mono text-[10.5px] text-muted">water need</div>
                         </div>
                         <div>
                           <Gauge size={16} className="mx-auto mb-1 text-amber" />
                           <div className="font-display text-base font-bold capitalize">{crop.difficulty}</div>
-                          <div className="font-mono text-[9px] text-muted">difficulty</div>
+                          <div className="font-mono text-[10.5px] text-muted">difficulty</div>
                         </div>
                       </div>
                       <p className="mt-3 border-t border-white/8 pt-3 text-[12.5px] leading-relaxed text-ink-dim">
@@ -152,7 +152,7 @@ export function Scanner() {
                   )}
                 </div>
 
-                <div className="mt-4 border-t border-white/8 pt-3 font-mono text-[10px] text-faint">
+                <div className="mt-4 border-t border-white/8 pt-3 font-mono text-[11px] text-faint">
                   model · {result.model}
                 </div>
               </div>

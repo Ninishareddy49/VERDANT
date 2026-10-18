@@ -119,9 +119,9 @@ export const WEEKLY_YIELD = [
 
 /** Resource mix for sustainability radial. */
 export const RESOURCE_MIX = [
-  { name: 'Solar', value: 58, color: '#8bff5a' },
-  { name: 'Grid (green)', value: 27, color: '#38f5c9' },
-  { name: 'Recovered', value: 15, color: '#19e08c' },
+  { name: 'Solar', value: 58, color: '#4ade80' },
+  { name: 'Grid (green)', value: 27, color: '#34d399' },
+  { name: 'Recovered', value: 15, color: '#22c55e' },
 ]
 
 /** Water lifecycle (closed loop). */

@@ -14,10 +14,10 @@ import {
 } from '../lib/agronomy'
 
 const VERDICT = {
-  optimal: { tone: 'lime', color: '#8bff5a', label: 'Optimal envelope' },
-  good: { tone: 'mint', color: '#38f5c9', label: 'Healthy growth' },
-  suboptimal: { tone: 'amber', color: '#ffc24b', label: 'Sub-optimal' },
-  stressed: { tone: 'danger', color: '#ff6b6b', label: 'Plant under stress' },
+  optimal: { tone: 'lime', color: '#4ade80', label: 'Optimal envelope' },
+  good: { tone: 'mint', color: '#34d399', label: 'Healthy growth' },
+  suboptimal: { tone: 'amber', color: '#f59e0b', label: 'Sub-optimal' },
+  stressed: { tone: 'danger', color: '#f87171', label: 'Plant under stress' },
 } as const
 
 interface SliderDef {
@@ -73,9 +73,9 @@ function ResponseCurve({ slider, inputs, cropKey }: { slider: SliderDef; inputs:
   const cy = h - scoreAt(cur) * (h - 3) - 1.5
   return (
     <svg viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" className="h-9 w-full overflow-visible">
-      <polyline points={line} fill="none" stroke="#38f5c9" strokeWidth="1.4" strokeLinejoin="round" opacity={0.55} />
-      <circle cx={cx} cy={cy} r="2.6" fill="#8bff5a" style={{ filter: 'drop-shadow(0 0 4px #8bff5a)' }} />
-      <line x1={cx} y1={0} x2={cx} y2={h} stroke="#8bff5a" strokeWidth="0.5" opacity={0.3} strokeDasharray="2 2" />
+      <polyline points={line} fill="none" stroke="#34d399" strokeWidth="1.4" strokeLinejoin="round" opacity={0.55} />
+      <circle cx={cx} cy={cy} r="2.6" fill="#4ade80" style={{ filter: 'drop-shadow(0 0 4px #4ade80)' }} />
+      <line x1={cx} y1={0} x2={cx} y2={h} stroke="#4ade80" strokeWidth="0.5" opacity={0.3} strokeDasharray="2 2" />
     </svg>
   )
 }
@@ -128,7 +128,7 @@ export function Simulator() {
           <GlassCard hover={false} className="p-6">
             <div className="mb-5 flex items-center justify-between">
               <div className="eyebrow flex items-center gap-2"><Gauge size={13} /> Environment console</div>
-              <button onClick={reset} className="flex items-center gap-1.5 rounded-full border border-white/10 px-3 py-1.5 font-mono text-[11px] text-muted transition-all hover:border-mint/40 hover:text-mint">
+              <button onClick={reset} className="flex items-center gap-1.5 rounded-full border border-white/10 px-3 py-1.5 font-mono text-[12px] text-muted transition-all hover:border-mint/40 hover:text-mint">
                 <TimerReset size={12} /> reset
               </button>
             </div>
@@ -145,7 +145,7 @@ export function Simulator() {
                       </span>
                       <span className="font-mono text-[13px] text-lime">
                         {val}
-                        <span className="ml-1 text-[10px] text-muted">{s.unit}</span>
+                        <span className="ml-1 text-[11px] text-muted">{s.unit}</span>
                       </span>
                     </div>
                     <div className="flex items-center gap-3">
@@ -157,7 +157,7 @@ export function Simulator() {
                         step={s.step}
                         value={val}
                         onChange={(e) => set(s.key, parseFloat(e.target.value))}
-                        style={{ background: `linear-gradient(90deg, #19e08c ${pct}%, rgba(255,255,255,0.08) ${pct}%)` }}
+                        style={{ background: `linear-gradient(90deg, #22c55e ${pct}%, rgba(255,255,255,0.08) ${pct}%)` }}
                       />
                       <div className="w-12 shrink-0">
                         <ResponseCurve slider={s} inputs={inputs} cropKey={cropKey} />
@@ -186,39 +186,39 @@ export function Simulator() {
               </div>
               <Ring value={gi} color={v.color} size={104} stroke={9}>
                 <div className="font-display text-2xl font-bold leading-none" style={{ color: v.color }}>{gi}</div>
-                <div className="font-mono text-[9px] text-muted">growth idx</div>
+                <div className="font-mono text-[10.5px] text-muted">growth idx</div>
               </Ring>
             </div>
 
             {/* key outputs */}
             <div className="mt-6 grid grid-cols-2 gap-3">
               {[
-                { icon: Sprout, label: 'Days to harvest', val: result.daysToHarvest, unit: 'd', c: '#8bff5a' },
-                { icon: Activity, label: 'Predicted yield', val: result.yield, unit: 'kg/m²', c: '#38f5c9' },
-                { icon: CloudFog, label: 'VPD', val: result.vpd, unit: 'kPa', c: '#4be3ff' },
-                { icon: Sun, label: 'DLI', val: result.dli, unit: 'mol', c: '#ffc24b' },
+                { icon: Sprout, label: 'Days to harvest', val: result.daysToHarvest, unit: 'd', c: '#4ade80' },
+                { icon: Activity, label: 'Predicted yield', val: result.yield, unit: 'kg/m²', c: '#34d399' },
+                { icon: CloudFog, label: 'VPD', val: result.vpd, unit: 'kPa', c: '#38bdf8' },
+                { icon: Sun, label: 'DLI', val: result.dli, unit: 'mol', c: '#f59e0b' },
               ].map((o) => (
                 <div key={o.label} className="glass-soft rounded-2xl p-3.5">
                   <o.icon size={15} style={{ color: o.c }} className="mb-1.5" />
                   <div className="font-display text-xl font-bold leading-none">
                     {o.val}
-                    <span className="ml-1 font-mono text-[10px] font-normal text-muted">{o.unit}</span>
+                    <span className="ml-1 font-mono text-[11px] font-normal text-muted">{o.unit}</span>
                   </div>
-                  <div className="mt-1 font-mono text-[10px] text-muted">{o.label}</div>
+                  <div className="mt-1 font-mono text-[11px] text-muted">{o.label}</div>
                 </div>
               ))}
             </div>
 
             {/* factor suitability bars */}
             <div className="mt-6 flex-1">
-              <div className="mb-2.5 font-mono text-[10px] tracking-wide text-muted">FACTOR SUITABILITY</div>
+              <div className="mb-2.5 font-mono text-[11px] tracking-wide text-muted">FACTOR SUITABILITY</div>
               <div className="space-y-2.5">
                 {result.factors.map((f) => {
                   const sc = Math.round(f.score * 100)
-                  const col = sc >= 80 ? '#8bff5a' : sc >= 55 ? '#ffc24b' : '#ff6b6b'
+                  const col = sc >= 80 ? '#4ade80' : sc >= 55 ? '#f59e0b' : '#f87171'
                   return (
                     <div key={f.key}>
-                      <div className="mb-1 flex items-center justify-between font-mono text-[11px]">
+                      <div className="mb-1 flex items-center justify-between font-mono text-[12px]">
                         <span className="text-ink-dim">{f.label}</span>
                         <span className="text-muted">
                           {f.value}{f.unit} · opt {f.optimum} ·{' '}

@@ -182,11 +182,11 @@ export interface VpdBand {
 }
 
 export const VPD_BANDS: VpdBand[] = [
-  { zone: 'danger-wet', label: 'Over-transpiration risk', range: '< 0.4 kPa', color: '#4be3ff' },
-  { zone: 'propagation', label: 'Propagation / clones', range: '0.4 – 0.8', color: '#38f5c9' },
-  { zone: 'vegetative', label: 'Vegetative growth', range: '0.8 – 1.2', color: '#8bff5a' },
-  { zone: 'flower', label: 'Flower / fruit', range: '1.2 – 1.6', color: '#ffc24b' },
-  { zone: 'danger-dry', label: 'Water-stress risk', range: '> 1.6 kPa', color: '#ff6b6b' },
+  { zone: 'danger-wet', label: 'Over-transpiration risk', range: '< 0.4 kPa', color: '#38bdf8' },
+  { zone: 'propagation', label: 'Propagation / clones', range: '0.4 – 0.8', color: '#34d399' },
+  { zone: 'vegetative', label: 'Vegetative growth', range: '0.8 – 1.2', color: '#4ade80' },
+  { zone: 'flower', label: 'Flower / fruit', range: '1.2 – 1.6', color: '#f59e0b' },
+  { zone: 'danger-dry', label: 'Water-stress risk', range: '> 1.6 kPa', color: '#f87171' },
 ]
 
 export function vpdZone(vpdValue: number): VpdBand {

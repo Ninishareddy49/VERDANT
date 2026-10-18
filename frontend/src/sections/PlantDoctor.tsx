@@ -5,10 +5,10 @@ import { Bar, Chip, GlassCard, Reveal, Ring, SectionTitle } from '../components/
 import { diagnoseDisease, type DiagnoseResult } from '../lib/api'
 
 const SEV: Record<DiagnoseResult['severity'], { color: string; tone: 'lime' | 'amber' | 'danger'; label: string }> = {
-  none: { color: '#8bff5a', tone: 'lime', label: 'Healthy' },
-  low: { color: '#ffc24b', tone: 'amber', label: 'Low severity' },
-  moderate: { color: '#ffc24b', tone: 'amber', label: 'Moderate' },
-  high: { color: '#ff6b6b', tone: 'danger', label: 'High severity' },
+  none: { color: '#4ade80', tone: 'lime', label: 'Healthy' },
+  low: { color: '#f59e0b', tone: 'amber', label: 'Low severity' },
+  moderate: { color: '#f59e0b', tone: 'amber', label: 'Moderate' },
+  high: { color: '#f87171', tone: 'danger', label: 'High severity' },
 }
 
 export function PlantDoctor() {
@@ -52,14 +52,14 @@ export function PlantDoctor() {
             />
             <div className="mt-5 grid grid-cols-3 gap-3 text-center">
               {[
-                { icon: Activity, t: '14+ classes', s: 'corn · potato · rice · wheat' },
-                { icon: Stethoscope, t: '98% acc', s: 'validation set' },
+                { icon: Activity, t: '13 classes', s: 'corn · potato · rice · wheat' },
+                { icon: Stethoscope, t: '98% acc', s: 'reported by model authors' },
                 { icon: ShieldCheck, t: 'on-device', s: 'private inference' },
               ].map((x) => (
                 <div key={x.t} className="glass-soft rounded-xl p-3">
                   <x.icon size={16} className="mx-auto mb-1.5 text-mint" />
                   <div className="font-display text-sm font-semibold">{x.t}</div>
-                  <div className="font-mono text-[9px] text-muted">{x.s}</div>
+                  <div className="font-mono text-[10.5px] text-muted">{x.s}</div>
                 </div>
               ))}
             </div>
@@ -96,14 +96,14 @@ export function PlantDoctor() {
                     <h3 className="font-display text-2xl font-bold leading-tight">
                       {result.condition ?? result.top.label}
                     </h3>
-                    {result.crop && <p className="font-mono text-[11px] text-muted">crop · {result.crop}</p>}
+                    {result.crop && <p className="font-mono text-[12px] text-muted">crop · {result.crop}</p>}
                   </div>
                   <Ring value={result.top.score * 100} color={sev!.color} size={92} stroke={8}>
                     <div className="font-display text-xl font-bold leading-none">
                       {Math.round(result.top.score * 100)}
                       <span className="text-xs">%</span>
                     </div>
-                    <div className="font-mono text-[9px] text-muted">conf.</div>
+                    <div className="font-mono text-[10.5px] text-muted">conf.</div>
                   </Ring>
                 </div>
 
@@ -111,15 +111,15 @@ export function PlantDoctor() {
 
                 {/* prediction distribution */}
                 <div className="mt-5">
-                  <div className="mb-2 font-mono text-[10px] tracking-wide text-muted">PROBABILITY DISTRIBUTION</div>
+                  <div className="mb-2 font-mono text-[11px] tracking-wide text-muted">PROBABILITY DISTRIBUTION</div>
                   <div className="space-y-2">
                     {result.predictions.slice(0, 4).map((p, i) => (
                       <div key={p.label}>
-                        <div className="mb-1 flex justify-between font-mono text-[11px]">
+                        <div className="mb-1 flex justify-between font-mono text-[12px]">
                           <span className={i === 0 ? 'text-ink' : 'text-muted'}>{p.label}</span>
                           <span className={i === 0 ? 'text-lime' : 'text-muted'}>{(p.score * 100).toFixed(1)}%</span>
                         </div>
-                        <Bar value={p.score * 100} color={i === 0 ? sev!.color : '#3a5446'} height={5} />
+                        <Bar value={p.score * 100} color={i === 0 ? sev!.color : '#3f4743'} height={5} />
                       </div>
                     ))}
                   </div>
@@ -155,7 +155,7 @@ export function PlantDoctor() {
                   </div>
                 </div>
 
-                <div className="mt-4 border-t border-white/8 pt-3 font-mono text-[10px] text-faint">
+                <div className="mt-4 border-t border-white/8 pt-3 font-mono text-[11px] text-faint">
                   model · {result.model}
                 </div>
               </div>

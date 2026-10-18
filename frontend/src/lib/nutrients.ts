@@ -23,11 +23,11 @@ interface Salt {
   S?: number
 }
 
-const CAL_NIT: Salt = { name: 'Calcium Nitrate', formula: 'Ca(NO₃)₂·4H₂O', color: '#8bff5a', N: 0.155, Ca: 0.19 }
-const KNO3: Salt = { name: 'Potassium Nitrate', formula: 'KNO₃', color: '#38f5c9', N: 0.13, K: 0.38 }
-const MKP: Salt = { name: 'Monopotassium Phosphate', formula: 'KH₂PO₄', color: '#19e08c', P: 0.228, K: 0.287 }
-const EPSOM: Salt = { name: 'Magnesium Sulfate', formula: 'MgSO₄·7H₂O', color: '#4be3ff', Mg: 0.098, S: 0.13 }
-const K2SO4: Salt = { name: 'Potassium Sulfate', formula: 'K₂SO₄', color: '#b6ff6a', K: 0.415, S: 0.18 }
+const CAL_NIT: Salt = { name: 'Calcium Nitrate', formula: 'Ca(NO₃)₂·4H₂O', color: '#4ade80', N: 0.155, Ca: 0.19 }
+const KNO3: Salt = { name: 'Potassium Nitrate', formula: 'KNO₃', color: '#34d399', N: 0.13, K: 0.38 }
+const MKP: Salt = { name: 'Monopotassium Phosphate', formula: 'KH₂PO₄', color: '#22c55e', P: 0.228, K: 0.287 }
+const EPSOM: Salt = { name: 'Magnesium Sulfate', formula: 'MgSO₄·7H₂O', color: '#38bdf8', Mg: 0.098, S: 0.13 }
+const K2SO4: Salt = { name: 'Potassium Sulfate', formula: 'K₂SO₄', color: '#86efac', K: 0.415, S: 0.18 }
 
 /* ---------- Reference recipe (ppm of element at EC 2.0, vegetative) ----------
    A realistic balanced controlled-environment formulation. */
@@ -69,7 +69,7 @@ export interface NutrientResult {
 }
 
 const EL_COLORS: Record<string, string> = {
-  N: '#8bff5a', P: '#19e08c', K: '#38f5c9', Ca: '#b6ff6a', Mg: '#4be3ff', S: '#ffc24b',
+  N: '#4ade80', P: '#22c55e', K: '#34d399', Ca: '#86efac', Mg: '#38bdf8', S: '#f59e0b',
 }
 
 /* pH targets by crop family (most CEA crops want 5.5–6.2). */

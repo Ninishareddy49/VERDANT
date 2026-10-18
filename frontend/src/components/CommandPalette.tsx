@@ -84,7 +84,7 @@ export function CommandPalette({ onNavigate }: { onNavigate: (v: View) => void }
                 placeholder="Jump to a tool…"
                 className="flex-1 bg-transparent text-sm text-ink outline-none placeholder:text-faint"
               />
-              <kbd className="rounded bg-white/10 px-1.5 py-0.5 font-mono text-[10px] text-muted">ESC</kbd>
+              <kbd className="rounded bg-white/10 px-1.5 py-0.5 font-mono text-[11px] text-muted">ESC</kbd>
             </div>
 
             {/* results */}
@@ -109,7 +109,7 @@ export function CommandPalette({ onNavigate }: { onNavigate: (v: View) => void }
                     </span>
                     <span className="flex-1">
                       <span className="block text-[13.5px] font-medium text-ink">{n.label}</span>
-                      <span className="block font-mono text-[10px] text-faint">{n.hint}</span>
+                      <span className="block font-mono text-[11px] text-faint">{n.hint}</span>
                     </span>
                     {on && <CornerDownLeft size={14} className="text-mint" />}
                   </button>
@@ -117,7 +117,7 @@ export function CommandPalette({ onNavigate }: { onNavigate: (v: View) => void }
               })}
             </div>
 
-            <div className="flex items-center justify-between border-t border-white/8 px-4 py-2.5 font-mono text-[10px] text-faint">
+            <div className="flex items-center justify-between border-t border-white/8 px-4 py-2.5 font-mono text-[11px] text-faint">
               <span>↑↓ navigate · ↵ open</span>
               <span>VERDANT command bar</span>
             </div>

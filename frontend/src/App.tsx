@@ -76,7 +76,7 @@ export default function App() {
                     </motion.div>
                   </AnimatePresence>
                 </main>
-                <footer className="mt-10 flex items-center justify-between border-t border-white/8 pt-6 font-mono text-[11px] text-faint">
+                <footer className="mt-10 flex items-center justify-between border-t border-white/8 pt-6 font-mono text-[12px] text-faint">
                   <span>VERDANT · Sustainable AI Urban-Farming Platform</span>
                   <span className="text-muted">ViT · Sentence-Transformer · Gemma 3</span>
                 </footer>

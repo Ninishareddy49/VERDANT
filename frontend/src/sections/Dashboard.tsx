@@ -24,9 +24,9 @@ const statusTone: Record<Zone['status'], 'lime' | 'amber' | 'danger'> = {
   alert: 'danger',
 }
 const statusColor: Record<Zone['status'], string> = {
-  optimal: '#8bff5a',
-  watch: '#ffc24b',
-  alert: '#ff6b6b',
+  optimal: '#4ade80',
+  watch: '#f59e0b',
+  alert: '#f87171',
 }
 
 export function Dashboard() {
@@ -62,12 +62,12 @@ export function Dashboard() {
         {KPIS.map((k, i) => (
           <Reveal key={k.key} delay={i * 0.04}>
             <GlassCard className="p-4" hover={false}>
-              <div className="font-mono text-[10px] tracking-wide text-muted">{k.label}</div>
+              <div className="font-mono text-[11px] tracking-wide text-muted">{k.label}</div>
               <div className="mt-1.5 font-display text-xl font-bold">
                 {k.value}
-                <span className="ml-1 font-mono text-[10px] font-normal text-muted">{k.unit}</span>
+                <span className="ml-1 font-mono text-[11px] font-normal text-muted">{k.unit}</span>
               </div>
-              <div className={`mt-1 font-mono text-[10px] ${k.trend === 'down' ? 'text-amber' : 'text-lime'}`}>
+              <div className={`mt-1 font-mono text-[11px] ${k.trend === 'down' ? 'text-amber' : 'text-lime'}`}>
                 {k.delta > 0 ? '▲' : '▼'} {Math.abs(k.delta)}%
               </div>
             </GlassCard>
@@ -89,22 +89,22 @@ export function Dashboard() {
               <ComposedChart data={curve} margin={{ top: 8, right: 8, left: -18, bottom: 0 }}>
                 <defs>
                   <linearGradient id="gTemp" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#19e08c" stopOpacity={0.5} />
-                    <stop offset="100%" stopColor="#19e08c" stopOpacity={0} />
+                    <stop offset="0%" stopColor="#22c55e" stopOpacity={0.5} />
+                    <stop offset="100%" stopColor="#22c55e" stopOpacity={0} />
                   </linearGradient>
                   <linearGradient id="gLight" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#8bff5a" stopOpacity={0.28} />
-                    <stop offset="100%" stopColor="#8bff5a" stopOpacity={0} />
+                    <stop offset="0%" stopColor="#4ade80" stopOpacity={0.28} />
+                    <stop offset="100%" stopColor="#4ade80" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid stroke="rgba(120,220,170,0.07)" vertical={false} />
+                <CartesianGrid stroke="rgba(255,255,255,0.07)" vertical={false} />
                 <XAxis dataKey="t" interval={3} tickLine={false} axisLine={false} />
                 <YAxis tickLine={false} axisLine={false} width={38} />
                 <Tooltip />
-                <Legend wrapperStyle={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#7e9c8b' }} />
-                <Area type="monotone" dataKey="light" name="Light %" stroke="#8bff5a" strokeWidth={1.5} fill="url(#gLight)" />
-                <Area type="monotone" dataKey="temp" name="Temp °C" stroke="#19e08c" strokeWidth={2.4} fill="url(#gTemp)" />
-                <Line type="monotone" dataKey="humidity" name="Humidity %" stroke="#4be3ff" strokeWidth={2} dot={false} strokeDasharray="4 3" />
+                <Legend wrapperStyle={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#8b9490' }} />
+                <Area type="monotone" dataKey="light" name="Light %" stroke="#4ade80" strokeWidth={1.5} fill="url(#gLight)" />
+                <Area type="monotone" dataKey="temp" name="Temp °C" stroke="#22c55e" strokeWidth={2.4} fill="url(#gTemp)" />
+                <Line type="monotone" dataKey="humidity" name="Humidity %" stroke="#38bdf8" strokeWidth={2} dot={false} strokeDasharray="4 3" />
               </ComposedChart>
             </ResponsiveContainer>
           </GlassCard>
@@ -115,16 +115,16 @@ export function Dashboard() {
             <SectionTitle eyebrow="Now" title="Current conditions" className="mb-5" />
             <div className="grid grid-cols-3 gap-2 text-center">
               {[
-                { v: live.temp, max: 35, label: 'Temp °C', color: '#19e08c', suffix: '' },
-                { v: live.humidity, max: 100, label: 'Humidity', color: '#4be3ff', suffix: '%' },
-                { v: live.soil, max: 100, label: 'Soil', color: '#8bff5a', suffix: '%' },
+                { v: live.temp, max: 35, label: 'Temp °C', color: '#22c55e', suffix: '' },
+                { v: live.humidity, max: 100, label: 'Humidity', color: '#38bdf8', suffix: '%' },
+                { v: live.soil, max: 100, label: 'Soil', color: '#4ade80', suffix: '%' },
               ].map((g) => (
                 <div key={g.label} className="flex flex-col items-center">
                   <Ring value={(g.v / g.max) * 100} color={g.color} size={84} stroke={7}>
                     <div className="font-display text-lg font-bold leading-none">{g.v}</div>
-                    <div className="font-mono text-[9px] text-muted">{g.suffix || '°C'}</div>
+                    <div className="font-mono text-[10.5px] text-muted">{g.suffix || '°C'}</div>
                   </Ring>
-                  <div className="mt-2 font-mono text-[10px] tracking-wide text-muted">{g.label}</div>
+                  <div className="mt-2 font-mono text-[11px] tracking-wide text-muted">{g.label}</div>
                 </div>
               ))}
             </div>
@@ -159,7 +159,7 @@ export function Dashboard() {
                       <span className="grid h-10 w-10 place-items-center rounded-xl bg-white/5 text-xl">{z.emoji}</span>
                       <div>
                         <div className="text-sm font-semibold leading-tight">{z.crop}</div>
-                        <div className="font-mono text-[10px] text-muted">
+                        <div className="font-mono text-[11px] text-muted">
                           {z.id} · {z.stage}
                         </div>
                       </div>
@@ -169,13 +169,13 @@ export function Dashboard() {
                     </Chip>
                   </div>
                   <div className="mt-3">
-                    <div className="mb-1 flex justify-between font-mono text-[10px] text-muted">
+                    <div className="mb-1 flex justify-between font-mono text-[11px] text-muted">
                       <span>health</span>
                       <span style={{ color: statusColor[z.status] }}>{z.health}%</span>
                     </div>
                     <ProgressBar value={z.health} color={statusColor[z.status]} height={5} />
                   </div>
-                  <div className="mt-3 grid grid-cols-3 gap-2 font-mono text-[10px] text-muted">
+                  <div className="mt-3 grid grid-cols-3 gap-2 font-mono text-[11px] text-muted">
                     <span>🌡 {z.temp}°</span>
                     <span>💧 {z.humidity}%</span>
                     <span>🌱 {z.soil}%</span>
@@ -198,7 +198,7 @@ export function Dashboard() {
                     <Icon size={16} className={`mt-0.5 shrink-0 ${color}`} />
                     <div className="min-w-0">
                       <p className="text-[13px] leading-snug text-ink-dim">{a.msg}</p>
-                      <div className="mt-1 font-mono text-[10px] text-faint">
+                      <div className="mt-1 font-mono text-[11px] text-faint">
                         zone {a.zone} · {a.ago} ago
                       </div>
                     </div>
@@ -218,16 +218,16 @@ export function Dashboard() {
             <BarChart data={WEEKLY_YIELD} margin={{ top: 8, right: 8, left: -20, bottom: 0 }} barGap={4}>
               <defs>
                 <linearGradient id="gBar" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#8bff5a" />
-                  <stop offset="100%" stopColor="#19e08c" />
+                  <stop offset="0%" stopColor="#4ade80" />
+                  <stop offset="100%" stopColor="#22c55e" />
                 </linearGradient>
               </defs>
-              <CartesianGrid stroke="rgba(120,220,170,0.07)" vertical={false} />
+              <CartesianGrid stroke="rgba(255,255,255,0.07)" vertical={false} />
               <XAxis dataKey="d" tickLine={false} axisLine={false} />
               <YAxis tickLine={false} axisLine={false} width={36} />
-              <Tooltip cursor={{ fill: 'rgba(120,220,170,0.06)' }} />
+              <Tooltip cursor={{ fill: 'rgba(255,255,255,0.06)' }} />
               <Legend wrapperStyle={{ fontFamily: 'JetBrains Mono', fontSize: 11 }} />
-              <Bar dataKey="target" name="Target" fill="rgba(126,156,139,0.25)" radius={[6, 6, 0, 0]} />
+              <Bar dataKey="target" name="Target" fill="rgba(139,148,144,0.25)" radius={[6, 6, 0, 0]} />
               <Bar dataKey="actual" name="Actual" fill="url(#gBar)" radius={[6, 6, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>

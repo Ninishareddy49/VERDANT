@@ -45,7 +45,7 @@ export function Overview({ onNavigate }: { onNavigate: (v: View) => void }) {
               </Chip>
             </div>
 
-            <h1 className="font-display text-[2.7rem] font-bold leading-[1.02] tracking-tight sm:text-6xl">
+            <h1 className="pb-1 font-display text-[2.7rem] font-bold leading-[1.1] tracking-tight sm:text-6xl">
               Grow smarter,
               <br />
               <span className="text-grad text-glow">in the city.</span>
@@ -78,7 +78,7 @@ export function Overview({ onNavigate }: { onNavigate: (v: View) => void }) {
                     {s.k}
                     <span className="ml-1 font-mono text-xs font-normal text-muted">{s.u}</span>
                   </div>
-                  <div className="mt-0.5 font-mono text-[11px] tracking-wide text-muted">{s.l}</div>
+                  <div className="mt-0.5 font-mono text-[12px] tracking-wide text-muted">{s.l}</div>
                 </div>
               ))}
             </div>
@@ -95,16 +95,14 @@ export function Overview({ onNavigate }: { onNavigate: (v: View) => void }) {
                   alt="Neon vertical hydroponic farm at night"
                   className="h-[360px] w-full object-cover sm:h-[440px]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#04140c] via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0c0f0e] via-transparent to-transparent" />
 
-                {/* scanning beam */}
-                <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-lime/25 to-transparent" style={{ animation: 'scanline 6s linear infinite' }} />
 
                 {/* top chip */}
                 <div className="absolute left-4 top-4 flex items-center gap-2">
-                  <Chip tone="emerald" dot>
-                    RACK A · vegetative
-                  </Chip>
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-black/60 px-2.5 py-1 text-[12px] font-medium text-ink backdrop-blur-sm">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald" /> Rack A · Vegetative
+                  </span>
                 </div>
 
                 {/* HUD bar */}
@@ -118,7 +116,7 @@ export function Overview({ onNavigate }: { onNavigate: (v: View) => void }) {
                       <m.icon size={15} className={m.c} />
                       <div className="leading-none">
                         <div className="font-mono text-[13px] text-ink">{m.v}</div>
-                        <div className="mt-0.5 font-mono text-[9px] text-muted">{m.l}</div>
+                        <div className="mt-0.5 font-mono text-[10.5px] text-muted">{m.l}</div>
                       </div>
                     </div>
                   ))}
@@ -138,18 +136,18 @@ export function Overview({ onNavigate }: { onNavigate: (v: View) => void }) {
               <GlassCard className="p-5">
                 <div className="flex items-start justify-between">
                   <div>
-                    <div className="font-mono text-[11px] tracking-wide text-muted">{k.label}</div>
+                    <div className="font-mono text-[12px] tracking-wide text-muted">{k.label}</div>
                     <div className="mt-2 font-display text-3xl font-bold">
                       {k.value}
                       <span className="ml-1 font-mono text-xs font-normal text-muted">{k.unit}</span>
                     </div>
                   </div>
-                  <span className={`font-mono text-[11px] ${k.trend === 'down' ? 'text-amber' : 'text-lime'}`}>
+                  <span className={`font-mono text-[12px] ${k.trend === 'down' ? 'text-amber' : 'text-lime'}`}>
                     {k.delta > 0 ? '▲' : '▼'} {Math.abs(k.delta)}%
                   </span>
                 </div>
                 <div className="mt-3">
-                  <Sparkline data={k.spark} w={200} h={36} color={k.trend === 'down' ? '#ffc24b' : '#8bff5a'} />
+                  <Sparkline data={k.spark} w={200} h={36} color={k.trend === 'down' ? '#f59e0b' : '#4ade80'} />
                 </div>
               </GlassCard>
             </Reveal>
@@ -208,7 +206,7 @@ export function Overview({ onNavigate }: { onNavigate: (v: View) => void }) {
                 <div key={m.name} className="glass rounded-2xl p-5">
                   <div className="font-mono text-[12px] text-lime">{m.name}</div>
                   <div className="mt-3 text-sm font-medium text-ink">{m.task}</div>
-                  <div className="mt-4 flex items-center justify-between border-t border-white/8 pt-3 font-mono text-[11px] text-muted">
+                  <div className="mt-4 flex items-center justify-between border-t border-white/8 pt-3 font-mono text-[12px] text-muted">
                     <span>{m.arch}</span>
                     <span className="text-mint">{m.acc}</span>
                   </div>
@@ -228,7 +226,7 @@ export function Overview({ onNavigate }: { onNavigate: (v: View) => void }) {
               alt=""
               className="absolute inset-0 h-full w-full object-cover opacity-40"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#04120c]/95 via-[#04120c]/70 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0c0f0e]/95 via-[#0c0f0e]/70 to-transparent" />
             <div className="relative grid gap-6 p-8 md:grid-cols-2 md:p-12">
               <div>
                 <h2 className="text-3xl font-bold leading-tight">
