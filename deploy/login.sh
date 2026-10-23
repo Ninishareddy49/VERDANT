@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Log every deploy CLI in once. Each one opens a browser or prints a code.
 # Already-authenticated tools are skipped, so this is safe to re-run.
+# These are your GLOBAL (default) accounts. Per-project accounts go in <project>/.env.deploy.
 set -uo pipefail
 
 step() { printf '\n\033[1;32m==> %s\033[0m\n' "$1"; }
@@ -22,13 +23,9 @@ supabase projects list >/dev/null 2>&1 || supabase login
 step "Render — alternative hosting (for later)"
 render whoami >/dev/null 2>&1 || render login
 
-step "Railway — alternative hosting (for later)"
-railway whoami >/dev/null 2>&1 || railway login
-
 step "Status"
 printf '%-10s %s\n' gh "$(gh api user -q .login 2>/dev/null || echo '✗')"
 printf '%-10s %s\n' hf "$(hf auth whoami --format quiet 2>/dev/null | head -1 || echo '✗')"
 printf '%-10s %s\n' vercel "$(vercel whoami 2>/dev/null || echo '✗')"
 printf '%-10s %s\n' supabase "$(supabase projects list >/dev/null 2>&1 && echo ok || echo '✗')"
 printf '%-10s %s\n' render "$(render whoami -o text 2>/dev/null | head -1 || echo '✗')"
-printf '%-10s %s\n' railway "$(railway whoami 2>/dev/null || echo '✗')"

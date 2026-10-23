@@ -1,0 +1,3 @@
+# Switches every CLI to this project's accounts while you're inside this folder
+[env]
+_.file = ".env.deploy"

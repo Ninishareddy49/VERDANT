@@ -5,7 +5,7 @@
 #   deploy/deploy.sh backend    # backend only
 #   deploy/deploy.sh frontend   # frontend only
 #
-# Prereqs (one time): deploy/login.sh
+# Accounts: tokens in .env.deploy win; otherwise the global CLI logins (deploy/login.sh)
 # Overrides: SPACE_NAME (default verdant-api), VERCEL_PROJECT (default verdant)
 set -euo pipefail
 
@@ -13,6 +13,10 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 SPACE_NAME="${SPACE_NAME:-verdant-api}"
 VERCEL_PROJECT="${VERCEL_PROJECT:-verdant}"
 TARGET="${1:-all}"
+
+# Per-project accounts (see .env.deploy); exported so every CLI picks them up
+[[ -f "$ROOT/.env.deploy" ]] && { set -a; source "$ROOT/.env.deploy"; set +a; }
+VERCEL_ARGS=(); [[ -n "${VERCEL_TOKEN:-}" ]] && VERCEL_ARGS=(--token "$VERCEL_TOKEN")
 
 HF_USER="$(hf auth whoami --format quiet 2>/dev/null | head -1)" || true
 [[ -n "$HF_USER" ]] || { echo "Not logged in to Hugging Face — run deploy/login.sh"; exit 1; }
@@ -58,8 +62,8 @@ deploy_frontend() {
 }
 EOF
   cd "$ROOT/frontend"
-  [[ -f .vercel/project.json ]] || vercel link --yes --project "$VERCEL_PROJECT"
-  vercel deploy --prod --yes
+  [[ -f .vercel/project.json ]] || vercel link --yes --project "$VERCEL_PROJECT" "${VERCEL_ARGS[@]}"
+  vercel deploy --prod --yes "${VERCEL_ARGS[@]}"
 }
 
 case "$TARGET" in
