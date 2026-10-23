@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Log every deploy CLI in once. Each one opens a browser or prints a code.
 # Already-authenticated tools are skipped, so this is safe to re-run.
-# These are your GLOBAL (default) accounts. Per-project accounts go in <project>/.env.deploy.
+# These are the GLOBAL (default) logins. Other accounts are token files managed by `acct`.
 set -uo pipefail
 
 step() { printf '\n\033[1;32m==> %s\033[0m\n' "$1"; }

@@ -30,4 +30,3 @@ frontend/.vercel/
 .vercel/
 supabase/.temp/
 *.zip
-.env.deploy

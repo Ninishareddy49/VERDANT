@@ -5,7 +5,8 @@
 #   deploy/deploy.sh backend    # backend only
 #   deploy/deploy.sh frontend   # frontend only
 #
-# Accounts: tokens in .env.deploy win; otherwise the global CLI logins (deploy/login.sh)
+# Account: run under a named account with `acct run NAME -- deploy/deploy.sh` (see `acct list`);
+# without acct it uses the global CLI logins.
 # Overrides: SPACE_NAME (default verdant-api), VERCEL_PROJECT (default verdant)
 set -euo pipefail
 
@@ -14,8 +15,6 @@ SPACE_NAME="${SPACE_NAME:-verdant-api}"
 VERCEL_PROJECT="${VERCEL_PROJECT:-verdant}"
 TARGET="${1:-all}"
 
-# Per-project accounts (see .env.deploy); exported so every CLI picks them up
-[[ -f "$ROOT/.env.deploy" ]] && { set -a; source "$ROOT/.env.deploy"; set +a; }
 VERCEL_ARGS=(); [[ -n "${VERCEL_TOKEN:-}" ]] && VERCEL_ARGS=(--token "$VERCEL_TOKEN")
 
 HF_USER="$(hf auth whoami --format quiet 2>/dev/null | head -1)" || true
@@ -62,7 +61,12 @@ deploy_frontend() {
 }
 EOF
   cd "$ROOT/frontend"
-  [[ -f .vercel/project.json ]] || vercel link --yes --project "$VERCEL_PROJECT" "${VERCEL_ARGS[@]}"
+  # Re-link when deploying under a different account than the last link
+  if [[ ! -f .vercel/project.json || "$(cat .vercel/acct 2>/dev/null)" != "${ACCT:-global}" ]]; then
+    rm -rf .vercel
+    vercel link --yes --project "$VERCEL_PROJECT" "${VERCEL_ARGS[@]}"
+    echo "${ACCT:-global}" > .vercel/acct
+  fi
   vercel deploy --prod --yes "${VERCEL_ARGS[@]}"
 }
 
