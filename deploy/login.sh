@@ -10,7 +10,7 @@ step "GitHub (gh)"
 gh auth status >/dev/null 2>&1 || gh auth login --web --git-protocol https
 gh auth setup-git >/dev/null 2>&1
 
-step "Hugging Face (hf) — backend hosting"
+step "Hugging Face (hf) — model weights (ONNX repo)"
 echo "Create a WRITE token at https://huggingface.co/settings/tokens and paste it below."
 hf auth whoami >/dev/null 2>&1 || hf auth login
 
@@ -20,7 +20,7 @@ vercel whoami >/dev/null 2>&1 || vercel login
 step "Supabase — database/auth (for later)"
 supabase projects list >/dev/null 2>&1 || supabase login
 
-step "Render — alternative hosting (for later)"
+step "Render — backend hosting"
 render whoami >/dev/null 2>&1 || render login
 
 step "Status"

@@ -1,15 +1,20 @@
 """Model loading + inference for VERDANT.
 
-Three pretrained models, all downloaded from the HuggingFace Hub on first use
-(no training). Everything is lazy-loaded and cached so the server boots fast.
+Three pretrained HuggingFace models (no training), exported to ONNX and int8-quantized
+so the API runs without PyTorch in ~300 MB of RAM. Weights come from the ONNX_REPO model
+repo on the Hub (see download_models.py). Everything is lazy-loaded and cached.
 """
 
 from __future__ import annotations
 
 import io
+import json
+import os
 import threading
+from pathlib import Path
 from typing import Any
 
+import numpy as np
 from PIL import Image
 
 from .knowledge import KB
@@ -18,38 +23,100 @@ DISEASE_MODEL = "wambugu71/crop_leaf_diseases_vit"          # Vision Transformer
 SPECIES_MODEL = "dima806/medicinal_plants_image_detection"  # ViT — 52 plants/herbs (public)
 EMBED_MODEL = "sentence-transformers/all-MiniLM-L6-v2"      # Sentence-Transformer
 
+# int8 ONNX exports of the three models above, one subfolder each (disease/, species/, embed/)
+ONNX_REPO = os.getenv("VERDANT_ONNX_REPO", "Ninisha/verdant-onnx")
+ONNX_DIR = Path(os.getenv("VERDANT_ONNX_DIR", Path(__file__).parent.parent / "onnx_models"))
+
 _cache: dict[str, Any] = {}
 _locks: dict[str, threading.Lock] = {k: threading.Lock() for k in ("disease", "species", "embed", "kb")}
+
+
+def _model_dir(key: str) -> Path:
+    d = ONNX_DIR / key
+    if not (d / "model.onnx").exists():
+        from huggingface_hub import snapshot_download
+
+        snapshot_download(ONNX_REPO, local_dir=ONNX_DIR, allow_patterns=[f"{key}/*"])
+    return d
+
+
+def _session(path: Path):
+    import onnxruntime as ort
+
+    opts = ort.SessionOptions()
+    opts.intra_op_num_threads = int(os.getenv("VERDANT_THREADS", "1"))
+    return ort.InferenceSession(str(path), opts, providers=["CPUExecutionProvider"])
+
+
+class ImageClassifier:
+    """Minimal stand-in for transformers' image-classification pipeline (ViTImageProcessor + softmax)."""
+
+    def __init__(self, d: Path):
+        cfg = json.loads((d / "config.json").read_text())
+        pre = json.loads((d / "preprocessor_config.json").read_text())
+        self.labels = {int(k): v for k, v in cfg["id2label"].items()}
+        self.size = (pre["size"]["width"], pre["size"]["height"])
+        self.resample = Image.Resampling(pre.get("resample", 2))
+        self.scale = pre.get("rescale_factor", 1 / 255)
+        self.mean = np.array(pre["image_mean"], dtype=np.float32)
+        self.std = np.array(pre["image_std"], dtype=np.float32)
+        self.sess = _session(d / "model.onnx")
+
+    def __call__(self, img: Image.Image, top_k: int = 5) -> list[dict]:
+        x = np.asarray(img.resize(self.size, self.resample), dtype=np.float32) * self.scale
+        x = ((x - self.mean) / self.std).transpose(2, 0, 1)[None]
+        logits = self.sess.run(None, {"pixel_values": x})[0][0]
+        p = np.exp(logits - logits.max())
+        p /= p.sum()
+        top = np.argsort(p)[::-1][:top_k]
+        return [{"label": self.labels[int(i)], "score": float(p[i])} for i in top]
+
+
+class Embedder:
+    """all-MiniLM-L6-v2: tokenize, run ONNX (pooling baked in), L2-normalize."""
+
+    def __init__(self, d: Path):
+        from tokenizers import Tokenizer
+
+        self.tok = Tokenizer.from_file(str(d / "tokenizer.json"))
+        self.tok.enable_truncation(256)
+        self.tok.enable_padding()
+        self.sess = _session(d / "model.onnx")
+
+    def encode(self, texts: list[str]) -> np.ndarray:
+        enc = self.tok.encode_batch(texts)
+        feeds = {
+            "input_ids": np.array([e.ids for e in enc], dtype=np.int64),
+            "attention_mask": np.array([e.attention_mask for e in enc], dtype=np.int64),
+        }
+        v = self.sess.run(["sentence_embedding"], feeds)[0]
+        return v / np.linalg.norm(v, axis=1, keepdims=True)
 
 
 # ----------------------------------------------------------------------------
 # loaders (thread-safe, lazy)
 # ----------------------------------------------------------------------------
-def _image_pipe(key: str, model_id: str):
+def _image_pipe(key: str):
     if key not in _cache:
         with _locks[key]:
             if key not in _cache:
-                from transformers import pipeline
-
-                _cache[key] = pipeline("image-classification", model=model_id)
+                _cache[key] = ImageClassifier(_model_dir(key))
     return _cache[key]
 
 
 def get_disease():
-    return _image_pipe("disease", DISEASE_MODEL)
+    return _image_pipe("disease")
 
 
 def get_species():
-    return _image_pipe("species", SPECIES_MODEL)
+    return _image_pipe("species")
 
 
 def get_embedder():
     if "embed" not in _cache:
         with _locks["embed"]:
             if "embed" not in _cache:
-                from sentence_transformers import SentenceTransformer
-
-                _cache["embed"] = SentenceTransformer(EMBED_MODEL)
+                _cache["embed"] = Embedder(_model_dir("embed"))
     return _cache["embed"]
 
 
@@ -57,12 +124,7 @@ def _kb_embeddings():
     if "kb_emb" not in _cache:
         with _locks["kb"]:
             if "kb_emb" not in _cache:
-                emb = get_embedder()
-                _cache["kb_emb"] = emb.encode(
-                    [item["q"] for item in KB],
-                    convert_to_tensor=True,
-                    normalize_embeddings=True,
-                )
+                _cache["kb_emb"] = get_embedder().encode([item["q"] for item in KB])
     return _cache["kb_emb"]
 
 
@@ -329,12 +391,9 @@ def build_diagnosis(preds_raw: list[dict]) -> dict:
 # advisor (semantic search)
 # ----------------------------------------------------------------------------
 def answer(question: str) -> dict:
-    from sentence_transformers import util
-
-    emb = get_embedder()
     kb = _kb_embeddings()
-    qv = emb.encode(question, convert_to_tensor=True, normalize_embeddings=True)
-    scores = util.cos_sim(qv, kb)[0]
+    qv = get_embedder().encode([question])[0]
+    scores = kb @ qv
     idx = int(scores.argmax())
     score = float(scores[idx])
     item = KB[idx]

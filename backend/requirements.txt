@@ -5,7 +5,12 @@ fastapi>=0.115
 uvicorn[standard]>=0.30
 python-multipart>=0.0.9
 pillow>=10.3
-# ML — pretrained models, no training
+# API runtime — int8 ONNX exports of the pretrained models (see app/ml.py)
+numpy>=1.26
+onnxruntime>=1.18
+tokenizers>=0.19
+huggingface_hub>=0.24
+# ML — original PyTorch models (training notebook / research paper pipeline)
 torch>=2.2
 transformers>=4.44
 sentence-transformers>=3.0
