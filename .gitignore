@@ -24,3 +24,9 @@ Thumbs.db
 *.suo
 *.sw?
 .idea/
+
+# Deploy tooling
+frontend/.vercel/
+.vercel/
+supabase/.temp/
+*.zip
